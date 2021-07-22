@@ -5,9 +5,9 @@ module SecondLevelCache
       extend ActiveSupport::Concern
 
       included do
-        after_commit :expire_second_level_cache, :on => :destroy
-        after_commit :update_second_level_cache, :on => :update
-        after_commit :write_second_level_cache, :on => :create
+        after_destroy :expire_second_level_cache
+        after_update :update_second_level_cache
+        after_create :write_second_level_cache
 
         class << self
           alias_method_chain :update_counters, :cache
